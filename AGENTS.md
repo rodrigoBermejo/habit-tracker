@@ -65,9 +65,9 @@ pero debe ser coherente con esta convencion.
 
 ## Regla de CONTEXT.md
 
-Toda edicion manual de codigo que no haya sido generada por un agente se documenta en
-CONTEXT.md con: que se cambio, por que, y que alternativa generada por agente se
-descarto. La honestidad en CONTEXT.md es parte de la evaluacion: si lo editaste a
+Toda edición manual de código que no haya sido generada por un agente se documenta en
+CONTEXT.md con: qué se cambió, por qué, y qué alternativa generada por agente se
+descartó. La honestidad en CONTEXT.md es parte de la evaluación: si lo editaste a
 mano y no lo anotaste, cuenta como no documentado.
 
 ## Prohibiciones explicitas (cerradas)
