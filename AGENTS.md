@@ -5,7 +5,7 @@ implementer) y todo developer humano debe respetar. Lo que aqui esta definido es
 cerrado por contrato y no se renegocia en el build. Lo que no esta aqui es decision
 abierta: tomala, pero documentala en el spec o en un ADR antes de implementar.
 
-Regla raiz: una decision no documentada es una decision no tomada.
+Regla raíz: una decisión no documentada es una decisión no tomada.
 
 ## Stack (cerrado)
 
