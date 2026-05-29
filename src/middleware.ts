@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { createServerClient } from "@supabase/ssr";
+=======
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
+>>>>>>> feat/auth
 import { NextResponse, type NextRequest } from "next/server";
 
 /*
@@ -18,7 +22,13 @@ export async function middleware(request: NextRequest) {
   const supabase = createServerClient(url, anonKey, {
     cookies: {
       getAll: () => request.cookies.getAll(),
+<<<<<<< HEAD
       setAll: (cookiesToSet) => {
+=======
+      setAll: (
+        cookiesToSet: { name: string; value: string; options?: CookieOptions }[],
+      ) => {
+>>>>>>> feat/auth
         cookiesToSet.forEach(({ name, value, options }) => {
           response.cookies.set(name, value, options);
         });
