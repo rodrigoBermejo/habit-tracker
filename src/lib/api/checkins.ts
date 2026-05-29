@@ -33,6 +33,18 @@ export async function getHabitCheckins(
   return data ?? [];
 }
 
+/** Fechas "hecho" de un hábito (para racha y franja en el detalle). */
+export async function getHabitDoneDates(habitId: string): Promise<string[]> {
+  const supabase = getSupabaseBrowserClient();
+  const { data, error } = await supabase
+    .from("checkins")
+    .select("date")
+    .eq("habit_id", habitId)
+    .eq("done", true);
+  if (error) throw error;
+  return (data ?? []).map((r) => r.date);
+}
+
 /** Toggle hecho/no-hecho del día (UPSERT por (habit_id, date), criterio 18). */
 export async function upsertCheckin(
   habitId: string,
