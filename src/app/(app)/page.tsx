@@ -70,19 +70,25 @@ function TodayInner() {
         </div>
       ) : (
         <div className="flex flex-col gap-5">
-          {habits.map((h) => {
+          {habits.map((h, index) => {
             const set = doneByHabit.get(h.id) ?? new Set<string>();
             const streak = currentStreak(h, set, today);
+            // Excedente read-only tras expirar Premium (criterio 30): solo los
+            // primeros `habitLimit` (3 en Free) quedan editables; el resto, bloqueados.
+            const isExcess = !isPremium && index >= habitLimit;
+            const subtitle = isExcess
+              ? "Premium para activar este hábito"
+              : `${frequencyLabel(h)} · ${streakLabel(streak)}`;
             return (
               <HabitCard
                 key={h.id}
                 habit={h}
-                subtitle={`${frequencyLabel(h)} · ${streakLabel(streak)}`}
+                subtitle={subtitle}
                 action={
                   <CheckinToggle
                     done={set.has(today)}
                     loading={pending.has(h.id)}
-                    disabled={!online}
+                    disabled={!online || isExcess}
                     onToggle={() => toggle(h)}
                   />
                 }
