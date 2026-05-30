@@ -19,3 +19,6 @@ $RECYCLE.BIN/
 .vscode/
 .idea/
 *.swp
+
+# typescript incremental
+*.tsbuildinfo
