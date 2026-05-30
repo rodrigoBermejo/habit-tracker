@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { InstallButton } from "@/components/install-button";
 
 const NAV = [
   { href: "/", label: "Hoy" },
@@ -41,6 +42,7 @@ export function Header() {
               {n.label}
             </Link>
           ))}
+          <InstallButton />
           <button
             type="button"
             onClick={logout}
