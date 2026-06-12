@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Tokens del sistema de diseño — fuente de verdad: docs/diseno.md §1 */
+@theme {
+  /* Marca (teal) */
+  --color-brand-50: #ecfdf8;
+  --color-brand-100: #d0f7ec;
+  --color-brand-200: #a6eedb;
+  --color-brand-300: #6fe0c6;
+  --color-brand-400: #34cba8;
+  --color-brand-500: #14a88a;
+  --color-brand-600: #0e8c72;
+  --color-brand-700: #0b6f5b;
+  --color-brand-800: #0a5949;
+  --color-brand-900: #08453a;
+
+  /* Neutrales (grises verdosos; sobrescriben la paleta default) */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f8faf9;
+  --color-neutral-100: #f1f4f3;
+  --color-neutral-200: #e3e8e6;
+  --color-neutral-300: #cbd2cf;
+  --color-neutral-400: #9aa3a0;
+  --color-neutral-500: #6b7572;
+  --color-neutral-600: #4d5754;
+  --color-neutral-700: #374240;
+  --color-neutral-800: #222b29;
+  --color-neutral-900: #141a19;
+
+  /* Semánticos (toasts, validación, banners) */
+  --color-success-bg: #e7f6ee;
+  --color-success-fg: #1b7a47;
+  --color-error-bg: #fceaea;
+  --color-error-fg: #b42318;
+  --color-warning-bg: #fef6e7;
+  --color-warning-fg: #8a5a00;
+  --color-info-bg: #eaf2fb;
+  --color-info-fg: #1f5fae;
+
+  /* Estados de hábito — exclusivos de la franja de 14 días y el toggle */
+  --color-cell-done: #2e9e5b;
+  --color-cell-missed: #d64545;
+  --color-cell-empty: #e3e8e6;
+
+  /* Sombras */
+  --shadow-card: 0 1px 2px rgba(20, 26, 25, 0.06), 0 1px 3px rgba(20, 26, 25, 0.04);
+  --shadow-pop: 0 4px 12px rgba(20, 26, 25, 0.1);
+  --shadow-modal: 0 12px 32px rgba(20, 26, 25, 0.18);
+
+  /* Tipografía: system font stack, sin web fonts */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    monospace;
+}
+
+body {
+  background: var(--color-neutral-50);
+  color: var(--color-neutral-800);
+  font-family: var(--font-sans);
+}
