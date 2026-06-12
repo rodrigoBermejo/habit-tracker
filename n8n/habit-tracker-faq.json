@@ -1,0 +1,143 @@
+{
+  "name": "Habit Tracker — Chatbot de ayuda (FAQ)",
+  "nodes": [
+    {
+      "id": "4e1aca29-75ad-4eb4-8514-586df6771687",
+      "name": "Chat Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [240, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "habit-tracker-faq",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "http://localhost:3000"
+        }
+      }
+    },
+    {
+      "id": "98008e96-a75d-4819-97f6-2424282754fa",
+      "name": "Agente FAQ Hábitos",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [560, 300],
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "options": {
+          "systemMessage": "Eres el asistente de ayuda de Hábitos, una app web instalable (PWA) para sostener hábitos diarios y semanales. Respondes SOLO preguntas sobre cómo usar la app, en español, breve y claro (máximo unas 100 palabras). Responde SIEMPRE en texto plano, sin formato Markdown: nada de asteriscos, negritas, encabezados ni listas con guiones; usa oraciones simples. No inventes funciones que no existen.\n\nConocimiento de la app:\n- Crear hábito: en la pantalla principal (/) con el botón de crear. Campos: nombre (1-60 caracteres, único entre tus hábitos activos), descripción opcional (hasta 280), frecuencia diaria o semanal (la semanal lleva una meta de 1 a 7 por semana) y hora de recordatorio opcional.\n- Check-in: en / haces toggle hecho/no-hecho del día actual. Solo se puede marcar el día de hoy, no días pasados ni futuros.\n- Racha: en hábitos diarios son los días consecutivos con \"hecho\" terminando hoy; un día sin \"hecho\" la regresa a 0. En semanales, semanas consecutivas alcanzando la meta. Racha 0 muestra la etiqueta \"Empieza hoy\".\n- Detalle (/habito/id): racha grande, franja de los últimos 14 días (verde = hecho, rojo = no hecho, gris = anterior a la creación), editar, archivar y compartir racha (si la racha es 1 o más y el navegador soporta compartir).\n- Celebración: modal al cruzar por primera vez rachas de 7 y 30 días.\n- Archivar: oculta el hábito de / sin borrar datos; se revierte en /archivados con \"Desarchivar\". Un hábito archivado no acepta check-ins.\n- Planes: Free permite hasta 3 hábitos activos y no incluye /estadisticas. Premium permite hasta 30 y desbloquea estadísticas. Se activa, cancela o reactiva en /cuenta. Si Premium expira con más de 3 hábitos activos, el exceso queda en solo lectura hasta archivar, reducir a 3 o reactivar.\n- Estadísticas (solo Premium): porcentaje de cumplimiento de los últimos 30 días y mejor racha histórica por hábito, incluyendo archivados (etiquetados).\n- Recordatorios: si un hábito tiene hora configurada y no está \"hecho\" a esa hora, la app genera un recordatorio (en esta versión se muestra como aviso dentro de la app, no email real).\n- Cuenta y sesión: cerrar sesión desde el header; recuperar contraseña desde /login con \"¿Olvidaste tu contraseña?\".\n- PWA y offline: la app se puede instalar desde el navegador; sin conexión, / muestra el último estado sincronizado en solo lectura.\n\nSi la pregunta no es sobre la app, di amablemente que solo ayudas con el uso de Hábitos y sugiere temas (crear hábitos, rachas, planes, estadísticas). Si no sabes la respuesta, dilo en vez de inventar.",
+          "enableStreaming": false
+        }
+      }
+    },
+    {
+      "id": "87a303c1-ee25-4657-880b-75642d3ef154",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [460, 540],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5.4-mini",
+          "cachedResultName": "gpt-5.4-mini"
+        }
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "pasVBXqh04VBSt4w",
+          "name": "OpenAi account Rodrigo"
+        }
+      }
+    },
+    {
+      "id": "9fe5d5eb-2c77-4c79-86f3-669507ca039b",
+      "name": "Memoria por sesión",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [640, 540],
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Chat Webhook').item.json.body.sessionId }}",
+        "contextWindowLength": 10
+      }
+    },
+    {
+      "id": "3ef63a80-d4e7-4499-8bc5-c3bf10e95ada",
+      "name": "Responder al widget",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [920, 300],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"reply\": $json.output } }}",
+        "options": {
+          "enableStreaming": false
+        }
+      }
+    },
+    {
+      "id": "a0277534-cd62-45cb-bcfb-97e48adee824",
+      "name": "Sticky Note 026d0c45",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [190, 250],
+      "parameters": {
+        "content": "## Chatbot de ayuda — Habit Tracker\n\nFAQ sobre el uso de la app (spec.md). El widget del frontend manda POST { message, sessionId } y recibe { reply }. La memoria se lleva por sessionId del cliente. CORS restringido al origen de la app. Ver docs/adr/0005 en el repo habit-tracker.",
+        "width": 980,
+        "height": 200
+      }
+    }
+  ],
+  "connections": {
+    "Chat Webhook": {
+      "main": [
+        [
+          {
+            "node": "Agente FAQ Hábitos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente FAQ Hábitos": {
+      "main": [
+        [
+          {
+            "node": "Responder al widget",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente FAQ Hábitos",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memoria por sesión": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente FAQ Hábitos",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
