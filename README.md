@@ -56,4 +56,5 @@ manuales: `docs/pruebas-manuales.md` (PM-001…PM-037, una por criterio de acept
 - `AGENTS.md` — contrato del proyecto (stack, gitflow, prohibiciones)
 - `docs/adr/` — decisiones de arquitectura (modelo de datos, auth, frontera, simulaciones)
 - `docs/diseno.md` — sistema visual · `docs/pruebas-manuales.md` — plan de pruebas
+- `n8n/` — workflows de n8n versionados (chatbot de ayuda; regla repo + instancia)
 - `CONTEXT.md` — bitácora de ediciones manuales y desviaciones
