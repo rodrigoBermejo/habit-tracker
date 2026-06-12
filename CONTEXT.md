@@ -56,6 +56,13 @@ implementó la app por fases, una rama por unidad (gitflow), mergeando a `develo
    `neutral-50` del body. Alternativa descartada: `tailwind.config` (en v4 el camino canónico
    es `@theme` en CSS).
 
+9. **Chatbot de ayuda (extensión fuera de spec, ADR-0005).** Widget propio en
+   `src/components/chat/` + workflow n8n `habit-tracker-faq` (id `xY29Fb9TUaD22pmn`) en
+   `n8n.inadaptados.mx`, creado y administrado vía MCP — **no está versionado en git**; el ADR
+   es su traza. URL del webhook en `NEXT_PUBLIC_CHAT_WEBHOOK_URL`. Las pruebas PM-038…PM-041
+   trazan con el ADR y no con criterios de `spec.md` (la skill `nueva-prueba-manual` exige
+   criterio de spec; se desvía a propósito porque la feature es posterior a la spec).
+
 ## Pendiente para conectar servicios reales (post-build)
 
 - Pegar `SUPABASE_SERVICE_ROLE_KEY` real en `.env.local` (hoy es placeholder) para que el pago

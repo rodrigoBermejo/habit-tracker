@@ -12,6 +12,8 @@ rachas, estadísticas premium, y planes Free/Premium. En español, mobile-first.
 ## Estado
 App funcional en local. Auth, CRUD de hábitos, check-in/racha, detalle, estadísticas, planes con
 **pago simulado** y recordatorios **por toast** (sin Stripe ni email reales — ver `docs/adr/0004`).
+Incluye un **chatbot de ayuda** (FAQ) respaldado por un workflow n8n externo — ver `docs/adr/0005`;
+requiere `NEXT_PUBLIC_CHAT_WEBHOOK_URL` y el workflow `habit-tracker-faq` publicado.
 
 ## Requisitos
 - Node 18+ y npm
@@ -47,7 +49,7 @@ App funcional en local. Auth, CRUD de hábitos, check-in/racha, detalle, estadí
 ## Verificación
 No hay tests automatizados (prohibidos por contrato, ver `AGENTS.md`). Las pruebas son
 manuales: `docs/pruebas-manuales.md` (PM-001…PM-037, una por criterio de aceptación de
-`spec.md`).
+`spec.md`; PM-038…PM-041 cubren el chatbot de ayuda y trazan con `docs/adr/0005`).
 
 ## Documentación
 - `spec.md` — especificación y criterios de aceptación

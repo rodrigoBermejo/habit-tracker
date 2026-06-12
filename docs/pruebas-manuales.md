@@ -266,6 +266,39 @@ Output del agente `qa`. Una prueba manual observable por cada criterio de acepta
 
 ---
 
+## Chatbot de ayuda (extensión, ADR-0005)
+
+El chatbot está **fuera de los 37 criterios** de `spec.md`: estas pruebas trazan 1-a-1 con
+afirmaciones verificables de `docs/adr/0005`, no con criterios de la spec (desviación anotada
+en `CONTEXT.md`). Requieren `NEXT_PUBLIC_CHAT_WEBHOOK_URL` en `.env.local` y el workflow n8n
+`habit-tracker-faq` publicado.
+
+### PM-038 — El widget abre y cierra, y solo existe en rutas autenticadas
+- **Criterio:** ADR-0005 — widget montado en `(app)/layout.tsx`, solo rutas autenticadas
+- **Precondición:** Sesión iniciada, en `/`.
+- **Pasos:** 1) Observar el botón flotante "?" abajo a la derecha. 2) Clickearlo. 3) Cerrar con el botón "✕" del panel. 4) Reabrir y cerrar con Esc. 5) Cerrar sesión y observar `/login`.
+- **Resultado esperado:** Al abrir aparece el panel "Ayuda" con mensaje de bienvenida del asistente; "✕" y Esc lo cierran. En `/login` y `/signup` el botón flotante **no** existe.
+
+### PM-039 — Responde FAQ con datos correctos y conserva el contexto de la conversación
+- **Criterio:** ADR-0005 — agente FAQ con memoria por `sessionId`
+- **Precondición:** Sesión iniciada, widget abierto, conexión normal.
+- **Pasos:** 1) Enviar "¿Cuántos hábitos puedo crear en el plan Free?". 2) Esperar la respuesta. 3) Enviar "¿Y cómo activo ese plan que mencionas?".
+- **Resultado esperado:** Mientras espera se ve la burbuja "Escribiendo…". La primera respuesta menciona el límite de **3** hábitos activos. La segunda entiende que "ese plan" es Premium y menciona `/cuenta` — sin que el usuario lo repita.
+
+### PM-040 — Fallo del webhook muestra error inline sin romper la app
+- **Criterio:** ADR-0005 — cualquier respuesta fuera del contrato `{ reply }` es error
+- **Precondición:** Sesión iniciada. Workflow n8n despublicado (o `NEXT_PUBLIC_CHAT_WEBHOOK_URL` apuntando a una ruta inexistente).
+- **Pasos:** 1) Abrir el widget. 2) Enviar cualquier pregunta.
+- **Resultado esperado:** Aparece una burbuja de error (fondo rojizo) con el texto exacto "No se pudo obtener respuesta. Intenta de nuevo." **dentro del chat** — no un toast. El resto de la app sigue operable y el input permite reintentar.
+
+### PM-041 — Offline deshabilita el envío y lo rehabilita al volver
+- **Criterio:** ADR-0005 — estado offline del widget (patrón del banner del criterio #35)
+- **Precondición:** Sesión iniciada, widget abierto. DevTools → Network → "Offline".
+- **Pasos:** 1) Activar modo offline. 2) Observar el panel. 3) Intentar escribir/enviar. 4) Volver a "Online".
+- **Resultado esperado:** Con offline, el panel muestra la banda "Sin conexión" (ámbar) y el input y el botón "Enviar" quedan deshabilitados. Al volver online, la banda desaparece y se puede enviar de nuevo.
+
+---
+
 ## Pruebas técnicas (fuera de QA manual)
 
 Requieren acceso a base de datos o herramientas de desarrollo. Trazan con la sección homónima de `spec.md`.
@@ -287,6 +320,7 @@ Insertar dos checkins para `(habit_id, date)` y dos hábitos activos con el mism
 ## Compuerta de cobertura
 
 **Cobertura:** los 37 criterios (1–37) tienen exactamente una prueba (PM-001…PM-037), 1-a-1.
+PM-038…PM-041 cubren el chatbot de ayuda y trazan con `docs/adr/0005` (extensión fuera de spec).
 
 **Criterios huérfanos:** ninguno.
 
