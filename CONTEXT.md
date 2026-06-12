@@ -48,6 +48,14 @@ implementó la app por fases, una rama por unidad (gitflow), mergeando a `develo
 7. **Endurecimiento de seguridad** (`supabase/migrations/20260529000006`): se revocó `EXECUTE` de
    las funciones trigger `SECURITY DEFINER` tras detectarlo con el advisor del MCP.
 
+8. **`src/app/globals.css` nunca recibió los tokens del sistema de diseño.** Quedó el default de
+   create-next-app, por lo que Tailwind v4 no generaba las clases `bg-brand-*`, `bg-cell-*`,
+   `text-error-fg`, `shadow-card`, etc. (~100 usos en componentes): botón primario sin fondo,
+   franja de 14 días invisible. Se corrigió en `fix/design-tokens` agregando el bloque `@theme`
+   de `docs/diseno.md` §1 (paletas, semánticos, celdas, sombras, system font stack) y el fondo
+   `neutral-50` del body. Alternativa descartada: `tailwind.config` (en v4 el camino canónico
+   es `@theme` en CSS).
+
 ## Pendiente para conectar servicios reales (post-build)
 
 - Pegar `SUPABASE_SERVICE_ROLE_KEY` real en `.env.local` (hoy es placeholder) para que el pago
