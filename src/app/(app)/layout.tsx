@@ -3,6 +3,7 @@ import { Header } from "@/components/header";
 import { OfflineBanner } from "@/components/offline-banner";
 import { AuthGuard } from "@/components/auth-guard";
 import { ReminderToaster } from "@/components/reminder-toaster";
+import { ChatWidget } from "@/components/chat/chat-widget";
 
 // Rutas autenticadas, client-side + SWR (ADR-0003): no tiene sentido prerender
 // estático y rompe con el contexto de Auth. Se renderizan dinámicamente.
@@ -16,6 +17,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <OfflineBanner />
       <ReminderToaster />
       <main className="mx-auto max-w-[480px] px-4 py-4 pb-16">{children}</main>
+      <ChatWidget />
     </AuthGuard>
   );
 }
