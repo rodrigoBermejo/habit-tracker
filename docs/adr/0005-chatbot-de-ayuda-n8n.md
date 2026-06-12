@@ -52,6 +52,7 @@ el workflow puede evolucionar (otro modelo, RAG, tools) sin cambiar el frontend.
   mitigación documentada arriba.
 - La base de conocimiento está **duplicada** (spec.md ↔ system prompt del agente): si la app
   cambia, el prompt se desactualiza en silencio.
-- El workflow **no está versionado en git**: vive en la instancia n8n y se administra vía MCP;
-  este ADR y CONTEXT.md son su única traza en el repo.
+- El workflow corre en la instancia n8n y su export vive versionado en
+  `n8n/habit-tracker-faq.json` (regla repo + instancia, ver `n8n/README.md`): el riesgo
+  restante es la **deriva** si alguien edita la instancia sin re-exportar al repo.
 - Las pruebas del chatbot (PM-038…PM-041) referencian este ADR y no un criterio de `spec.md`.
