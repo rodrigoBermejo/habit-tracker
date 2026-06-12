@@ -30,6 +30,7 @@ App funcional en local. Auth, CRUD de hábitos, check-in/racha, detalle, estadí
    NEXT_PUBLIC_SUPABASE_ANON_KEY=...
    SUPABASE_SERVICE_ROLE_KEY=...        # para pago simulado y recordatorios (service-role)
    NEXT_PUBLIC_APP_URL=http://localhost:3000
+   NEXT_PUBLIC_CHAT_WEBHOOK_URL=https://n8n.inadaptados.mx/webhook/habit-tracker-faq   # chatbot de ayuda (ver docs/adr/0005)
    ```
 3. (Si la BD está vacía) aplica las migraciones con el MCP de Supabase o la CLI
    (`supabase db push`). Regenera tipos: ver `supabase/README.md`.
