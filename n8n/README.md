@@ -10,8 +10,10 @@ instancia se re-exporta aquí **en el mismo commit/PR** que lo motiva.
 |---|---|---|---|
 | `habit-tracker-faq.json` | `n8n.inadaptados.mx` (proyecto personal de Rodrigo) | `xY29Fb9TUaD22pmn` | `POST https://n8n.inadaptados.mx/webhook/habit-tracker-faq` |
 
-`habit-tracker-faq` es el coach del reto Irreemplazable (FAQ + apoyo de tareas) — ver
-`docs/adr/0005` (chatbot) y `docs/adr/0006` (pivote, voz y conocimiento del reto). Contrato:
+`habit-tracker-faq` es el mentor del reto Irreemplazable — ver `docs/adr/0005` (chatbot) y
+`docs/adr/0006` (pivote, voz y conocimiento del reto). Tiene dos modos: **FAQ** (operativo,
+respuesta directa) y **mentor socrático** (guía con preguntas para que el usuario resuelva las
+tareas y aprenda, sin dar la respuesta masticada). Contrato:
 `POST { message, sessionId }` → `200 { reply }`. CORS restringido al origen de la app.
 El `path` del webhook sigue siendo `habit-tracker-faq` por estabilidad del endpoint ya integrado.
 

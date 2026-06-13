@@ -74,6 +74,12 @@ implementó la app por fases, una rama por unidad (gitflow), mergeando a `develo
     editorial** que el dueño debe revisar (la calidad del reto = la calidad de esas tareas). El
     coach n8n (mismo webhook `habit-tracker-faq`) se actualizó con la voz del producto y el
     conocimiento del reto. Las pruebas PM-042…PM-048 trazan con la spec del reto, no con `spec.md`.
+    **Actualización:** las 28 tareas se reescribieron para nivel CERO conocimiento (día 1 = crear
+    cuenta y saludar a una IA); el contenido final se aplicó por la migración `20260612000002`
+    (upsert idempotente; no se editó la `…0001` ya aplicada). El agente n8n pasó de solo-FAQ a
+    **mentor con dos modos**: FAQ (operativo, directo) y socrático (guía con preguntas para que el
+    usuario resuelva y aprenda, sin dar la respuesta masticada). El export en `n8n/` se mantiene
+    sincronizado.
 
 ## Pendiente para conectar servicios reales (post-build)
 
