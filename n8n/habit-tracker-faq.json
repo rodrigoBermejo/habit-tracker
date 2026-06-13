@@ -12,7 +12,7 @@
         "path": "habit-tracker-faq",
         "responseMode": "responseNode",
         "options": {
-          "allowedOrigins": "http://localhost:3000"
+          "allowedOrigins": "http://localhost:3000,https://habit-tracker-sooty-eta.vercel.app"
         }
       }
     },
