@@ -7,6 +7,7 @@ import { InstallButton } from "@/components/install-button";
 
 const NAV = [
   { href: "/", label: "Hoy" },
+  { href: "/reto", label: "Reto" },
   { href: "/estadisticas", label: "Estadísticas" },
   { href: "/archivados", label: "Archivados" },
   { href: "/cuenta", label: "Cuenta" },
@@ -24,11 +25,11 @@ export function Header() {
 
   return (
     <header className="border-b border-neutral-200 bg-white">
-      <div className="mx-auto flex max-w-[480px] items-center justify-between gap-2 px-4 py-3">
+      <div className="mx-auto flex max-w-[480px] flex-wrap items-center justify-between gap-2 px-4 py-3">
         <Link href="/" className="text-lg font-semibold text-brand-700">
-          Hábitos
+          Irreemplazable
         </Link>
-        <nav className="flex items-center gap-3 text-sm">
+        <nav className="flex flex-wrap items-center gap-3 text-sm">
           {NAV.filter((n) => n.href !== "/").map((n) => (
             <Link
               key={n.href}
