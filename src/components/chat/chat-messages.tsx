@@ -4,7 +4,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 import type { ChatMessage } from "@/lib/api/chat";
 
 const WELCOME =
-  "¡Hola! Soy el asistente de Hábitos. Pregúntame cómo crear hábitos, cómo funcionan las rachas o qué incluye cada plan.";
+  "¡Va! Soy tu coach del reto. Pregúntame cómo va el reto, cómo resolver la tarea de hoy o cómo funcionan las rachas. Ponte perro.";
 
 type ChatMessagesProps = {
   messages: ChatMessage[];

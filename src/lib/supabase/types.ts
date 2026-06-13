@@ -22,6 +22,72 @@ export type Database = {
   }
   public: {
     Tables: {
+      challenge_completions: {
+        Row: {
+          completed_on: string
+          created_at: string
+          day_number: number
+          id: string
+          user_id: string
+        }
+        Insert: {
+          completed_on: string
+          created_at?: string
+          day_number: number
+          id?: string
+          user_id: string
+        }
+        Update: {
+          completed_on?: string
+          created_at?: string
+          day_number?: number
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      challenge_enrollments: {
+        Row: {
+          created_at: string
+          started_on: string
+          status: Database["public"]["Enums"]["challenge_status"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          started_on: string
+          status?: Database["public"]["Enums"]["challenge_status"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          started_on?: string
+          status?: Database["public"]["Enums"]["challenge_status"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      challenge_tasks: {
+        Row: {
+          day_number: number
+          prompt: string
+          tip: string | null
+          title: string
+        }
+        Insert: {
+          day_number: number
+          prompt: string
+          tip?: string | null
+          title: string
+        }
+        Update: {
+          day_number?: number
+          prompt?: string
+          tip?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       checkins: {
         Row: {
           created_at: string
@@ -190,6 +256,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      challenge_status: "active" | "completed"
       habit_frequency: "diaria" | "semanal"
       plan_status:
         | "active"
@@ -325,6 +392,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      challenge_status: ["active", "completed"],
       habit_frequency: ["diaria", "semanal"],
       plan_status: [
         "active",
@@ -343,6 +411,7 @@ export const Constants = {
 ---------------------------------------------------------------------------- */
 export type HabitFrequency = Database["public"]["Enums"]["habit_frequency"];
 export type PlanStatus = Database["public"]["Enums"]["plan_status"];
+export type ChallengeStatus = Database["public"]["Enums"]["challenge_status"];
 
 export type Habit = Database["public"]["Tables"]["habits"]["Row"];
 export type HabitInsert = Database["public"]["Tables"]["habits"]["Insert"];
@@ -350,3 +419,7 @@ export type HabitUpdate = Database["public"]["Tables"]["habits"]["Update"];
 export type Checkin = Database["public"]["Tables"]["checkins"]["Row"];
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 export type Subscription = Database["public"]["Tables"]["subscriptions"]["Row"];
+
+export type ChallengeTask = Database["public"]["Tables"]["challenge_tasks"]["Row"];
+export type ChallengeEnrollment = Database["public"]["Tables"]["challenge_enrollments"]["Row"];
+export type ChallengeCompletion = Database["public"]["Tables"]["challenge_completions"]["Row"];
