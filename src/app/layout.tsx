@@ -6,10 +6,10 @@ import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Hábitos",
-  description: "Registra y da seguimiento a tus hábitos diarios y semanales.",
+  title: "Irreemplazable",
+  description: "28 días para volverte irreemplazable con IA. Una tarea al día.",
   manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, title: "Hábitos", statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "Irreemplazable", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {

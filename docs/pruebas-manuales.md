@@ -299,6 +299,56 @@ en `CONTEXT.md`). Requieren `NEXT_PUBLIC_CHAT_WEBHOOK_URL` en `.env.local` y el 
 
 ---
 
+## Reto Irreemplazable (pivote, ADR-0006)
+
+El reto es el producto de nicho (ver `docs/reto-irreemplazable-spec.md`). Estas pruebas trazan
+1-a-1 con los criterios de **esa** spec, no con `spec.md` (extensión posterior; desviación
+anotada en `CONTEXT.md`). Requieren el seed de 28 tareas en `challenge_tasks`.
+
+### PM-042 — Onboarding inscribe al reto y aterriza en el día 1
+- **Criterio:** reto #1 y #2
+- **Precondición:** Usuario recién registrado, sin onboarding completado, sin inscripción.
+- **Pasos:** 1) Tras el signup, observar `/onboarding`. 2) Clickear "Empezar el reto".
+- **Resultado esperado:** Aterriza en `/`; el hero muestra "Día 1 de 28", la tarea del día 1 ("Tu primera conversación con propósito") con su consigna, racha "Empieza hoy" y el botón "Hecho".
+
+### PM-043 — Completar la tarea avanza el día y persiste
+- **Criterio:** reto #3
+- **Precondición:** Usuario inscrito en el día N (N<28), conexión normal.
+- **Pasos:** 1) En `/`, clickear "Hecho" en la tarea del día. 2) Observar el hero. 3) Recargar la página.
+- **Resultado esperado:** Sin recargar, el hero pasa a "Ya le diste hoy. Vuelve mañana por el día N+1", la barra de progreso avanza y la racha sube. Al recargar se mantiene; no se puede volver a marcar hoy.
+
+### PM-044 — No se puede saltar ni repetir un día (rechazo de servidor)
+- **Criterio:** reto #4
+- **Precondición:** Usuario inscrito; herramienta para hacer un insert directo (consola SQL o API) sobre `challenge_completions`.
+- **Pasos:** 1) Intentar insertar una completion con `day_number` mayor al día actual + 1, o uno ya existente.
+- **Resultado esperado:** El insert se rechaza (error de check del trigger "Solo puedes completar la tarea del día actual" o violación de unicidad). En la UI solo se ofrece la tarea del día actual.
+
+### PM-045 — Faltar días no rompe el reto
+- **Criterio:** reto #5
+- **Precondición:** Usuario inscrito que completó hasta el día N y dejó pasar uno o más días sin entrar.
+- **Pasos:** 1) Volver a `/` tras el hueco.
+- **Resultado esperado:** La tarea del día sigue siendo la N+1 (la siguiente no completada), no se reinició el reto; la racha de días consecutivos refleja el hueco (cuenta desde el regreso).
+
+### PM-046 — `/reto` muestra el grid de 28 días con estados
+- **Criterio:** reto #6
+- **Precondición:** Usuario inscrito con algunos días completados.
+- **Pasos:** 1) Ir a `/reto`.
+- **Resultado esperado:** Grid de 28 celdas: las completadas en verde, la actual con anillo brand, las bloqueadas en gris; se ven los stats Día/Racha/Avance y la leyenda.
+
+### PM-047 — Reto y hábitos libres son independientes
+- **Criterio:** reto #8
+- **Precondición:** Usuario inscrito en el reto.
+- **Pasos:** 1) En `/`, crear un hábito libre y hacerle check-in. 2) Completar la tarea del reto.
+- **Resultado esperado:** El check-in del hábito no altera el progreso del reto ni viceversa; ambos muestran sus rachas por separado en la misma pantalla.
+
+### PM-048 — Rebrand a Irreemplazable visible
+- **Criterio:** reto #10
+- **Precondición:** Sesión iniciada.
+- **Pasos:** 1) Observar el header y el título de la pestaña del navegador. 2) Ver el onboarding (usuario nuevo).
+- **Resultado esperado:** El wordmark del header dice "Irreemplazable", el título del navegador es "Irreemplazable" y el onboarding dice "Vuélvete irreemplazable en 28 días"; el layout no se rompe.
+
+---
+
 ## Pruebas técnicas (fuera de QA manual)
 
 Requieren acceso a base de datos o herramientas de desarrollo. Trazan con la sección homónima de `spec.md`.

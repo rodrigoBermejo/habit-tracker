@@ -65,6 +65,22 @@ implementó la app por fases, una rama por unidad (gitflow), mergeando a `develo
    `nueva-prueba-manual` exige criterio de spec; se desvía a propósito porque la feature es
    posterior a la spec).
 
+10. **Pivote de nicho a "Irreemplazable" (ADR-0006).** La app dejó de ser un habit tracker
+    genérico y se volvió **reto-first**: el Reto de 28 días de IA es la pantalla de inicio; el
+    tracker libre de hábitos sobrevive en la sección "Mis hábitos". `spec.md` queda como **base
+    histórica**; el producto vivo lo describe `docs/reto-irreemplazable-spec.md`. Tres tablas
+    nuevas (`challenge_tasks`/`enrollments`/`completions`, migración `20260612000001`) con RLS y
+    triggers que imitan `enforce_habit_limit`. Las 28 tareas seedeadas son un **BORRADOR
+    editorial** que el dueño debe revisar (la calidad del reto = la calidad de esas tareas). El
+    coach n8n (mismo webhook `habit-tracker-faq`) se actualizó con la voz del producto y el
+    conocimiento del reto. Las pruebas PM-042…PM-048 trazan con la spec del reto, no con `spec.md`.
+    **Actualización:** las 28 tareas se reescribieron para nivel CERO conocimiento (día 1 = crear
+    cuenta y saludar a una IA); el contenido final se aplicó por la migración `20260612000002`
+    (upsert idempotente; no se editó la `…0001` ya aplicada). El agente n8n pasó de solo-FAQ a
+    **mentor con dos modos**: FAQ (operativo, directo) y socrático (guía con preguntas para que el
+    usuario resuelva y aprenda, sin dar la respuesta masticada). El export en `n8n/` se mantiene
+    sincronizado.
+
 ## Pendiente para conectar servicios reales (post-build)
 
 - Pegar `SUPABASE_SERVICE_ROLE_KEY` real en `.env.local` (hoy es placeholder) para que el pago
